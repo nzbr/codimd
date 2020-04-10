@@ -1,18 +1,13 @@
-'use strict'
-// external modules
-const shortId = require('shortid')
+import { DataType, Model, Table, PrimaryKey, Column, Default } from 'sequelize-typescript'
+import { generate as shortIdGenerate, isValid as shortIdIsValid } from "shortid";
 
-module.exports = function (sequelize, DataTypes) {
-  let Temp = sequelize.define('Temp', {
-    id: {
-      type: DataTypes.STRING,
-      primaryKey: true,
-      defaultValue: shortId.generate
-    },
-    data: {
-      type: DataTypes.TEXT
-    }
-  })
+@Table
+export class Temp extends Model<Temp> {
+  @Default(shortIdGenerate)
+  @PrimaryKey
+  @Column(DataType.STRING)
+  id: string;
 
-  return Temp
+  @Column(DataType.TEXT)
+  data: string
 }
